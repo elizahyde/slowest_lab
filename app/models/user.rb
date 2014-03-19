@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_secure_password
-  
+
   before_validation { |user| user.email = email.downcase }
   before_save :create_remember_token
 
@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :followeds, :through => :outward_follows, :source => :followed
 
   has_many :attendances
+  has_many :shows, :through => :attendances
+  has_many :venues, :through => :shows
 
   def avatar
     a = read_attribute(:avatar)

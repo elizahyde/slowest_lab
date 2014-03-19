@@ -3,7 +3,7 @@ class DashboardController < ApplicationController
     if !signed_in?
       redirect_to new_session_path
     else
-      @attendances = current_user.attendances
+      @attendances = User.includes(:shows, :venues).find(current_user.id)
 
       # This is the worst:
       @followed_attendances = []
@@ -11,7 +11,7 @@ class DashboardController < ApplicationController
         @followed_attendances += a
       end
       @followed_attendances.sort_by!{|a| a.show.date}
-      
+
     end
   end
 end
