@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
 
       # This is the worst:
       @followed_attendances = []
-      current_user.followeds.map{|u| u.attendances}.each do |a|
+      current_user.followeds.page(params[:page]).per(10).map{|u| u.attendances}.each do |a|
         @followed_attendances += a
       end
       @followed_attendances.sort_by!{|a| a.show.date}
